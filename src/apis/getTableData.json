@@ -1,0 +1,79 @@
+{
+  "code":"0",
+  "msg":"success",
+  "data": [
+    {
+    "taskid":"32434",
+    "taskname":"任务一",
+    "taskstatus":2,
+    "createtime":"2016-05-02 14:56",
+    "spendtime":"100分钟",
+    "taskpercent":"0.25",
+    "taskchild":[
+      {
+        "childid":"213123",
+        "servicename":"重点人",
+        "servicecode":"01",
+        "childpercent":0.21,
+        "childstatus":"http://127.0.0.7:8080/detail",
+        "childurl":2
+      }
+    ]
+  },
+    {
+      "taskid":"32434",
+      "taskname":"任务一",
+      "taskstatus":2,
+      "createtime":"2016-05-02 14:56",
+      "spendtime":"100分钟",
+      "taskpercent":"0.25",
+      "taskchild":[
+        {
+          "childid":"213123",
+          "servicename":"重点人",
+          "servicecode":"01",
+          "childpercent":0.21,
+          "childstatus":"http://127.0.0.7:8080/detail",
+          "childurl":2
+        }
+      ]
+    }
+    ,
+    {
+      "taskid":"32434",
+      "taskname":"任务一",
+      "taskstatus":2,
+      "createtime":"2016-05-02 14:56",
+      "spendtime":"100分钟",
+      "taskpercent":"0.25",
+      "taskchild":[
+        {
+          "childid":"213123",
+          "servicename":"重点人",
+          "servicecode":"01",
+          "childpercent":0.21,
+          "childstatus":"http://127.0.0.7:8080/detail",
+          "childurl":2
+        }
+      ]
+    },
+    {
+      "taskid":"32434",
+      "taskname":"任务一",
+      "taskstatus":2,
+      "createtime":"2016-05-02 14:56",
+      "spendtime":"100分钟",
+      "taskpercent":"0.25",
+      "taskchild":[
+        {
+          "childid":"213123",
+          "servicename":"重点人",
+          "servicecode":"01",
+          "childpercent":0.21,
+          "childstatus":"http://127.0.0.7:8080/detail",
+          "childurl":2
+        }
+      ]
+    }
+  ]
+}
