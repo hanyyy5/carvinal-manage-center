@@ -14,39 +14,16 @@ module.exports = {
   productionSourceMap: false,
   devServer: {
     proxy: {
+      '/api': {
+        target: 'http://localhost:8080',
+        ws: true,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      },
       '/ailab': {
-        /*江海峰*/
         target: 'http://10.0.203.155:8888',
-        /*李祥超*/
-        // target: 'http://10.0.203.162:8888',
-        changeOrigin: true
-      },
-      '/facepredator': {
-        /*江海峰*/
-        target: 'http://10.0.203.155:8888',
-        /*李祥超*/
-        // target: 'http://10.0.203.162:8888',
-        changeOrigin: true
-      },
-      '/armyprotector': {
-        /*江海峰*/
-        target: 'http://10.0.203.155:8888',
-        /*李祥超*/
-        // target: 'http://10.0.203.162:8888',
-        changeOrigin: true
-      },
-      '/peacepigeon': {
-        /*江海峰*/
-        target: 'http://10.0.203.155:8888',
-        /*李祥超*/
-        // target: 'http://10.0.203.162:8888',
-        changeOrigin: true
-      },
-      '/predator': {
-        /*江海峰*/
-        target: 'http://10.0.203.155:8888',
-        /*李祥超*/
-        // target: 'http://10.0.203.162:8888',
         changeOrigin: true
       },
     }

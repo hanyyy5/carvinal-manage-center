@@ -1,6 +1,5 @@
 import axios from 'axios'
 import router from '../router'
-// const baseUrl = 'http://10.0.203.155:8080/';
 axios.interceptors.response.use(
   response => {
     const data = response.data
@@ -24,10 +23,7 @@ axios.interceptors.response.use(
  * 登陆
  */
 export const checkLogin = () => {
-  return axios.request({
-    url:'../../static/isLogin.json',
-    method: 'get',
-  })
+  axios.get('/api/data/isLogin.json')
 }
 /**
  * 任务列表--进行中

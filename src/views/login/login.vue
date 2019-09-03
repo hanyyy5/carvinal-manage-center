@@ -99,7 +99,7 @@ export default {
                         loginid: username,
                         loginpwd: password
                     }
-                    checkLogin(params).then(function(res){
+                    checkLogin().then(function(res){
                         if(Number(res.data.code) === 0){
                             if(isCheck){
                                 cookie.setCookie("accountInfo", accountInfo, 1440*3);
