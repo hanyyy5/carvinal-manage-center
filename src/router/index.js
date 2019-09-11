@@ -5,23 +5,6 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '../views/layout/index'
-// import { getMenuList } from '@/apis/data'
-// let route_list = [];
-// getMenuList().then(function (res) {
-//   route_list=res.data.data
-// })
-// let route_child=[];
-// route_list.forEach((item,index) => {
-//   if(item.code == '01'){
-//     route_child.push({
-//           path: 'facepredator',
-//           name: 'Facepredator',
-//           component: () => import('@/views/gallery/facepredator'),
-//           meta: { title: '重点人布控', icon: 'facepredator' }
-//     })
-//   }
-// })
-
 
 
 export const constantRouterMap = [
@@ -35,7 +18,7 @@ export const constantRouterMap = [
   {
     path: '/',
     component: Layout,
-    redirect: '/master',
+    redirect: '/homePage',
     name: 'Dashboard',
     hidden: true,
     children: [{
@@ -43,12 +26,68 @@ export const constantRouterMap = [
       component: () => import('@/views/dashboard/index')
     }]
   },
-
+  {
+    path: '/homePage',
+    component: Layout,
+    name: 'homePage',
+    redirect: '/homePage/homePageMain',
+    meta: { title: '首页', icon: 'home' },
+    children: [
+      {
+        path: 'homePageMain',
+        name: 'homePageMain',
+        hidden: true,
+        component: () => import('@/views/homePage/homePageMain'),
+      }]
+  },
+  {
+    path: '/goodsManage',
+    component: Layout,
+    name: 'goodsManage',
+    redirect: '/goodsManage/goodsManageMain',
+    meta: { title: '商品管理', icon: 'goods' },
+    children: [
+      {
+      path: 'goodsManageMain',
+      name: 'goodsManageMain',
+      hidden: true,
+      component: () => import('@/views/goodsManage/goodsManageMain'),
+    }],
+  },
+  {
+    path: '/orderManage',
+    component: Layout,
+    name: 'orderManage',
+    redirect: '/orderManage/orderManageMain',
+    meta: { title: '订单管理', icon: 'order' },
+    children: [
+      {
+      path: 'orderManageMain',
+      name: 'orderManageMain',
+      hidden: true,
+      component: () => import('@/views/orderManage/orderManageMain'),
+    }],
+  },
+  {
+    path: '/integrationManage',
+    component: Layout,
+    name: 'integrationManage',
+    redirect: '/integrationManage/integrationManageMain',
+    meta: { title: '积分管理', icon: 'integration' },
+    children: [
+      {
+      path: 'integrationManageMain',
+      name: 'integrationManageMain',
+      hidden: true,
+      component: () => import('@/views/integrationManage/integrationManageMain'),
+    }],
+  },
   {
     path: '/master',
     component: Layout,
     name: 'master',
-    redirect: '/master/create',
+    hidden: true,
+    redirect: '/master/complete',
     meta: { title: '任务列表', icon: 'icon_master' },
     children: [
       {
@@ -83,6 +122,7 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/gallery/facepredator',
     name: 'gallery',
+    hidden: true,
     meta: { title: '基础图库', icon: 'icon-gallery' },
     // children:route_child
     children: [

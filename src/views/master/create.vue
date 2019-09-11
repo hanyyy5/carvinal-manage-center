@@ -17,12 +17,12 @@
         </div>
         <div class="table-list">
             <el-table
-                    :data="tableData"
-                    stripe
-                    style="width: 100%"
-                    :default-sort="{prop:'createtime',order:'descending'}"
-                    :v-loading="loading"
-                    :height="tableheight"
+                  :data="tableData"
+                  stripe
+                  style="width: 100%"
+                  :default-sort="{prop:'createtime',order:'descending'}"
+                  :v-loading="loading"
+                  :height="tableheight"
             >
                 <el-table-column
                         prop="taskname"

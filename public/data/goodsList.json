@@ -1,0 +1,53 @@
+{
+    "code":"0",
+    "msg":"ok",
+    "data": [
+       {
+        "goodsName": "荷包",
+        "price": "2",
+        "totalCount": "2000",
+        "prepareCount": "50",
+        "sellCount": "0",
+        "stockCount": "9"
+       },{
+        "goodsName": "T恤",
+        "price": "2",
+        "totalCount": "2000",
+        "prepareCount": "50",
+        "sellCount": "0",
+        "stockCount": "9"
+       },
+       {
+        "goodsName": "异形抱枕",
+        "price": "2",
+        "totalCount": "2000",
+        "prepareCount": "50",
+        "sellCount": "0",
+        "stockCount": "9"
+       },{
+        "goodsName": "豪华鼠标垫",
+        "price": "2",
+        "totalCount": "2000",
+        "prepareCount": "50",
+        "sellCount": "0",
+        "stockCount": "9"
+       },
+       {
+        "goodsName": "签字笔",
+        "price": "2",
+        "totalCount": "2000",
+        "prepareCount": "50",
+        "sellCount": "0",
+        "stockCount": "9"
+       },{
+        "goodsName": "T恤",
+        "price": "2",
+        "totalCount": "2000",
+        "prepareCount": "50",
+        "sellCount": "0",
+        "stockCount": "9"
+       }
+    ],
+    "total": 100
+}
+  

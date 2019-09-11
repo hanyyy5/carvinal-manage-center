@@ -23,8 +23,43 @@ axios.interceptors.response.use(
  * 登陆
  */
 export const checkLogin = () => {
-  axios.get('/api/data/isLogin.json')
+  return axios.get('/api/data/isLogin.json')
 }
+
+/**
+ * 获取商品管理列表
+ */
+export const getGoodsData = () => {
+  return axios.get('/api/data/goodsList.json')
+}
+
+/**
+ * 获取订单管理列表
+ */
+export const getOrderData = () => {
+  return axios.get('/api/data/orderList.json')
+}
+
+/**
+ * 获取积分管理列表
+ */
+export const getIntData = () => {
+  return axios.get('/api/data/intList.json')
+}
+
+/**
+ * 获取个人积分详情
+ */
+export const getIntDetail = () => {
+  return axios.get('/api/data/intDetail.json')
+}
+
+
+
+
+
+
+//other project use , to be delete
 /**
  * 任务列表--进行中
  */

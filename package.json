@@ -9,11 +9,12 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "echarts": "^4.2.1",
+    "jquery": "^3.4.0",
     "js-cookie": "^2.2.0",
     "node-sass": "^4.11.0",
-    "vue": "^2.6.6",
-    "jquery":"^3.4.0",
     "v-viewer": "^1.4.0",
+    "vue": "^2.6.6",
     "vue-waterfall": "^1.0.6"
   },
   "devDependencies": {

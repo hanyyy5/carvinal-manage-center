@@ -1,9 +1,7 @@
 <template>
   <div :class="classObj" class="app-wrapper" @click="toggleCreaList">
-    <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
-    <!-- <sidebar class="sidebar-container"/> -->
+    <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"></div>
     <div class="main-container">
-      <navbar/>
       <app-main/>
     </div>
   </div>

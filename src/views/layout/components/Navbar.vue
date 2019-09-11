@@ -1,15 +1,8 @@
 <template>
   <div class="navbar">
-    <div class="logo">
-        <img src="../../../assets/images/carnival_logo.png" alt="">
-        <div class="name">烽火嘉年华</div>
-    </div>
     <div class="avatar-container">
-      <div class="avatar-wrapper">
-        <img src="../../../assets/images/avatar.jpg" class="user-avatar">
-      </div>
       <div class="user-logstatus logout" @click="loginout">
-        <img src="../../../assets/images/logout.png">
+        <img src="../../../assets/images/logout1.png">
       </div>
     </div>
   </div>
@@ -56,22 +49,7 @@ export default {
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.12), 0 0 3px 0 rgba(0,0,0,.04);
   display: flex;
   align-items: center;
-  background-color: #2d3e53;
-  .logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    padding-left: 24px;
-    img {
-      width: 48px;
-      margin-bottom: 9px;
-    }
-    .name {
-      font-size: 22px;
-      margin-left: 12px;
-    }
-  }
+  background-color: #fff;
   .hamburger-container {
     line-height: 58px;
     height: 50px;
@@ -89,19 +67,6 @@ export default {
     display: inline-block;
     position: absolute;
     right: 0;
-    .avatar-wrapper {
-      position: absolute;
-      right: 70px;
-      cursor: pointer;
-      margin-top: 16px;
-      position: relative;
-      line-height: initial;
-      .user-avatar {
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-      }
-    }
     .user-logstatus {
       vertical-align: top;
       line-height: 52px;
@@ -109,9 +74,13 @@ export default {
       position: absolute;
       right: 0;
       top: 0;
-      background-color: #263242;
+      background-color: #fff;
+      color: #333;
       padding: 8px 16px 0;
       cursor: pointer;
+      img {
+        width: 20px;
+      }
     }
   }
 }
