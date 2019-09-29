@@ -4,10 +4,10 @@ axios.interceptors.response.use(
   response => {
     const data = response.data
     const $message = app.__vue__.$message;
-    if(data.code === '0000') {
-      router.push({ path: 'login' })
-    }
-    if(data.code !== '0') {
+    // if(data.code === '0000') {
+    //   router.push({ path: 'login' })
+    // }
+    if(data.status !== 200) {
       $message({
         type: 'warning',
         message: data.msg || '操作失败'
@@ -30,21 +30,23 @@ export const checkLogin = () => {
  * 获取商品管理列表
  */
 export const getGoodsData = () => {
-  return axios.get('/api/data/goodsList.json')
+  // return axios.get('/api/data/goodsList.json')
+  return axios.get('/api/getItemList')
 }
 
 /**
  * 获取订单管理列表
  */
 export const getOrderData = () => {
-  return axios.get('/api/data/orderList.json')
+  // return axios.get('/api/data/orderList.json')
+  return axios.get('/api/getOrderList')
 }
 
 /**
  * 获取积分管理列表
  */
 export const getIntData = () => {
-  return axios.get('/api/data/intList.json')
+  return axios.get('/api/getUserList')
 }
 
 /**

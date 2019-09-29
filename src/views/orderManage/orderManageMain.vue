@@ -28,16 +28,19 @@
                         >
                     </el-table-column>
                     <el-table-column
-                            prop="id"
+                            prop="userCardNumber"
                             label="工号"
                            >
                     </el-table-column>
                    
                     <el-table-column
-                            prop="exchangeCount"
+                            prop="exchangeNumber"
                             label="兑换礼品数量"
                             sortable
                            >
+                           <template slot-scope="scope" >
+                                {{scope.row.exchangeNumber}}
+                            </template>
                     </el-table-column>
 
                      <el-table-column
@@ -47,13 +50,13 @@
                     </el-table-column>
 
                       <el-table-column
-                            prop="address"
+                            prop="position"
                             label="收货地"
                            >
                     </el-table-column>
 
                     <el-table-column
-                            prop="exchangeTime"
+                            prop="timeStr"
                             label="兑换时间"
                            >
                     </el-table-column>
@@ -78,7 +81,7 @@
 
 <script>
 import cookie from '../../utils/cookie.js'
-import {getOrderData} from '../../apis/data.js'
+import {getGoodsData, getOrderData} from '../../apis/data.js'
 import { debug } from 'util';
 export default {
     data() {
@@ -122,43 +125,123 @@ export default {
             count: 1000,    //总量
             pagesize: 10,   //条数
             pagenum: 1,     //页数,
+            originTableData: [],
             tableData: [],
             isShowEmpty: false,
+            goodsPriceMap: []
             
         }
     },
     created() {
       this.getOrderList();
     },
+    watch: {
+        orderSearchKey: function(val, oldVal){
+            if(val === "") {
+               this.tableData = this.originTableData
+               return 
+            }
+            let oldTableData = JSON.parse(JSON.stringify(this.tableData));
+            this.tableData = oldTableData.filter( item => (~item.userCardNumber.indexOf(val) || ~item.timeStr.indexOf(val) ||  ~item.position.indexOf(val)));
+        }
+    },
     methods: {
         handleSelectionChange() {
             
         },
         getOrderList() {
+            let _this = this;
             const param = {
                 pagesize: this.pagesize,
                 pagenum: this.pagenum
             }
-            getOrderData().then(res => {
-                if (Number(res.data.code) === 0) {
-                    if (res.data.data.length === 0) {
-                        this.isShowEmpty = true;
-                    }
-                    this.count = res.data.total;
-                    this.isShowLoading = false
-                    this.tableData = res.data.data
-                }
+            this.getGoodsPriceMap().then((mapArr)=> {
+                _this.goodsPriceMap = mapArr
+                getOrderData().then(res => {
+                    if (Number(res.data.status) === 200) {
+                            if (res.data.data.length === 0) {
+                                this.isShowEmpty = true;
+                            }
+                            this.count = res.data.data.length;
+                            this.isShowLoading = false
+                            let dataObj = [];
+                            res.data.data.forEach((item)=> {
+                                item.costInt = 0
+                                item.exchangeNumber = 0
+                                item.itemList.forEach((good)=> {
+                                     _this.goodsPriceMap.forEach((obj)=> {
+                                        if(good.id === obj._id && good.typeIndex === obj.typeIndex) {
+                                            item.costInt += obj.price * good.number
+                                            item.exchangeNumber += good.number
+                                        }
+                                    })
+                                })
+                                dataObj.push(item)
+                            })
+                            this.originTableData = dataObj
+                            let oldTableData = JSON.parse(JSON.stringify(this.originTableData));
+                            this.tableData = oldTableData.splice(0, this.pagesize)
+                        }
 
+                    })
             })
+           
+        },
+        getGoodsPriceMap() {
+            return new Promise(function(resolve, reject){
+                getGoodsData().then(res => {
+                    if (Number(res.data.status) === 200) {
+                        let dataObj = []
+                        let tempRes = res.data.data;
+                        tempRes.forEach((goodItem)=> {
+                            if(goodItem.typeList && goodItem.typeList.length > 0) {
+                                goodItem.typeList.forEach((typeItem)=> {
+                                    let itemData = {};
+                                    itemData._id       = goodItem._id
+                                    itemData.typeIndex = typeItem.typeIndex
+                                    itemData.price     = typeItem.price
+                                    dataObj.push(itemData)
+                                })
+                            }else{
+                            //
+                            }
+                            
+                        })
+                        resolve(dataObj);
+                    }else{
+                        reject(res)
+                    }
+
+                })
+            })
+           
         },
         handleSizeChange(val) {
             this.pagesize = val
-            // this.getCreateTaskList()
+            let _this = this;
+            this.pagesize = val
+            setTimeout(function() {
+                let maxPageNum = _this.count % _this.pagesize === 0 ? parseInt(_this.count / _this.pagesize) : parseInt(_this.count / _this.pagesize) + 1;
+                let oldTableData = JSON.parse(JSON.stringify(_this.originTableData));
+                if(_this.pagenum < maxPageNum) {
+                    _this.tableData = oldTableData.splice(_this.pagesize * (_this.pagenum - 1), _this.pagesize)
+                }else{
+                    _this.tableData = oldTableData.splice(_this.pagesize * (_this.pagenum - 1), _this.count - _this.pagesize * (_this.pagenum - 1)) 
+                }
+            }, 0)
+           
 
         },
         handleCurrentChange(val) {
             this.pagenum = val;
-            // this.getCreateTaskList()
+            this.pagenum = val;
+            let maxPageNum = this.count % this.pagesize === 0 ? parseInt(this.count / this.pagesize) : parseInt(this.count / this.pagesize) + 1;
+            let oldTableData = JSON.parse(JSON.stringify(this.originTableData));
+            if(this.pagenum < maxPageNum) {
+                this.tableData = oldTableData.splice(this.pagesize * (this.pagenum - 1), this.pagesize)
+            }else{
+                this.tableData = oldTableData.splice(this.pagesize * (this.pagenum - 1), this.count - this.pagesize * (this.pagenum - 1)) 
+            }
         },
     },
     mounted() {

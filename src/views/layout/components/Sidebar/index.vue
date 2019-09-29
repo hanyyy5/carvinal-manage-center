@@ -53,17 +53,17 @@ export default {
   },
   mounted() {
     const self = this
-    getMenuList().then(function(res) {
-      res.data.data.forEach(element => {
-        const item = {
-          path: 'facepredator',
-          name: 'Facepredator',
-          component: () => import('@/views/gallery/facepredator'),
-          meta: { title: '重点人布控', icon: 'facepredator' }
-        }
-        self.menus.push(item)
-      });
-    })
+    // getMenuList().then(function(res) {
+    //   res.data.data.forEach(element => {
+    //     const item = {
+    //       path: 'facepredator',
+    //       name: 'Facepredator',
+    //       component: () => import('@/views/gallery/facepredator'),
+    //       meta: { title: '重点人布控', icon: 'facepredator' }
+    //     }
+    //     self.menus.push(item)
+    //   });
+    // })
   }
 }
 </script>

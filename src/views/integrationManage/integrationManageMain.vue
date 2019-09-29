@@ -22,28 +22,43 @@
                                 @selection-change="handleSelectionChange"
                         >
                             <el-table-column
-                                    prop="id"
+                                    prop="cardNumber"
                                     label="工号"
                                 >
                             </el-table-column>
                         
                             <el-table-column
-                                    prop="onlineIntCount"
+                                    prop="onlineScore"
                                     label="线上总积分"
                                 >
                             </el-table-column>
 
                             <el-table-column
-                                    prop="offlineIntCount"
+                                    prop="underTheLineScore"
                                     label="线下总积分"
                                 >
                             </el-table-column>
 
                             <el-table-column
-                                    prop="isExchange"
+                                    prop="exchange"
                                     label="是否兑换"
+                                    :filters="[{text: '是', value: 1}, {text: '否', value: 0}]"
+                                    :filter-method="filterHandler"
                                 >
-                                <template slot-scope="scope">{{ scope.row.isExchange === 0 ? '是':'否' }}</template>   
+                                <template slot-scope="scope">{{ scope.row.exchange === 0 ? '否':'是' }}</template>   
+                            </el-table-column>
+
+                            <el-table-column
+                                    prop="consumption"
+                                    label="消耗积分"
+                                >
+                            </el-table-column>
+
+                            <el-table-column
+                                    prop="left"
+                                    label="剩余积分"
+                                >
+                                <template slot-scope="scope">{{ scope.row.underTheLineScore + scope.row.onlineScore - scope.row.consumption }}</template>   
                             </el-table-column>
 
                             <el-table-column
@@ -149,12 +164,24 @@ export default {
             fullscreenLoading: false,
             tableheight: 600,
             currentPage: 1, //当前页
-            count: 1000,    //总量
+            count: 0,    //总量
             pagesize: 10,   //条数
             pagenum: 1,     //页数,
+            originTableData: [],
             tableData: [],
             isShowEmpty: false,
-            detailData: []
+            detailData: [],
+        }
+    },
+    watch: {
+        intSearchKey: function(val, oldVal){
+            if(val === "") {
+            //    this.tableData = this.originTableData
+               this.handleCurrentChange(this.pagenum);
+               return 
+            }
+            let oldTableData = JSON.parse(JSON.stringify(this.tableData));
+            this.tableData = oldTableData.filter( item => (~item.cardNumber.indexOf(val) ||  ~item.exchangeTime.indexOf(val)));
         }
     },
     created() {
@@ -164,30 +191,54 @@ export default {
         handleSelectionChange() {
 
         },
+        filterHandler(value, row, column) {
+            return row.exchange === value;
+        },
         getIntList() {
             const param = {
                 pagesize: this.pagesize,
                 pagenum: this.pagenum
             }
             getIntData().then(res => {
-                if (Number(res.data.code) === 0) {
+                if (Number(res.data.status) === 200) {
                     if (res.data.data.length === 0) {
                         this.isShowEmpty = true;
                     }
-                    this.count = res.data.total;
+                    this.count = res.data.data.length;
                     this.isShowLoading = false
-                    this.tableData = res.data.data
+                    
+                    this.originTableData = res.data.data
+                    let oldTableData = JSON.parse(JSON.stringify(this.originTableData));
+                    this.tableData = oldTableData.splice(0, this.pagesize)
                 }
 
             })
         },
+        
         handleSizeChange(val) {
+            let _this = this;
             this.pagesize = val
             // this.getCreateTaskList()
-
+            setTimeout(function() {
+                let maxPageNum = _this.count % _this.pagesize === 0 ? parseInt(_this.count / _this.pagesize) : parseInt(_this.count / _this.pagesize) + 1;
+                let oldTableData = JSON.parse(JSON.stringify(_this.originTableData));
+                if(_this.pagenum < maxPageNum) {
+                    _this.tableData = oldTableData.splice(_this.pagesize * (_this.pagenum - 1), _this.pagesize)
+                }else{
+                    _this.tableData = oldTableData.splice(_this.pagesize * (_this.pagenum - 1), _this.count - _this.pagesize * (_this.pagenum - 1)) 
+                }
+            }, 0)
+           
         },
         handleCurrentChange(val) {
             this.pagenum = val;
+            let maxPageNum = this.count % this.pagesize === 0 ? parseInt(this.count / this.pagesize) : parseInt(this.count / this.pagesize) + 1;
+            let oldTableData = JSON.parse(JSON.stringify(this.originTableData));
+            if(this.pagenum < maxPageNum) {
+                this.tableData = oldTableData.splice(this.pagesize * (this.pagenum - 1), this.pagesize)
+            }else{
+                this.tableData = oldTableData.splice(this.pagesize * (this.pagenum - 1), this.count - this.pagesize * (this.pagenum - 1)) 
+            }
             // this.getCreateTaskList()
         },
         intDetail(rowData) {
@@ -215,6 +266,7 @@ export default {
                 
             }
         })
+      
     },
 }
 </script>

@@ -14,17 +14,21 @@ module.exports = {
   productionSourceMap: false,
   devServer: {
     proxy: {
-      '/api': {
-        target: 'http://localhost:8080',
-        ws: true,
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': ''
-        }
-      },
+      // '/api': {
+      //   target: 'http://localhost:8080',
+      //   ws: true,
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     '^/api': ''
+      //   }
+      // },
       '/ailab': {
         target: 'http://10.0.203.155:8888',
         changeOrigin: true
+      },
+      '/api': {
+        target: 'https://fh.happyzzy.com',
+        changeOrigin: true,
       },
     }
   },

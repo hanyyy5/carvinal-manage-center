@@ -273,7 +273,7 @@ export default {
         this.loadAccountInfo();
         document.addEventListener('keydown', function(e){
             if(e.keyCode === 13){
-                self.submitForm('ruleForm', e)
+                
             }
         })
 
